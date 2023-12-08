@@ -1610,6 +1610,11 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
+crypto-js@^4.1.1:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.2.0.tgz#4d931639ecdfd12ff80e8186dba6af2c2e856631"
+  integrity sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==
+
 css.escape@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/css.escape/-/css.escape-1.5.1.tgz#42e27d4fa04ae32f931a4b4d4191fa9cddee97cb"
@@ -3799,6 +3804,13 @@ react-dom@^18.2.0:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
+
+react-geetest-v4@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-geetest-v4/-/react-geetest-v4-1.1.2.tgz#0204542607e79d642da3f8c11c0914e1fe99dee1"
+  integrity sha512-iLfEUkZHOPDrtmoMJ24555XZeB/ytDYbzRFlRfrXDOK//JjZl82wme6/MonBJ1FlyJYNHQr98FevCuNVV73S2g==
+  dependencies:
+    crypto-js "^4.1.1"
 
 react-hook-form@^7.48.2:
   version "7.48.2"

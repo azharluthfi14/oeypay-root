@@ -8,6 +8,6 @@ describe('Home page', async () => {
     const wrapper = render(<HomePage />);
 
     const title = wrapper.getByTestId('title-homepage');
-    expect(title?.textContent).toBe('This is HomePage Mas bro');
+    expect(title?.textContent).toBe('This is HomePage Mas');
   });
 });

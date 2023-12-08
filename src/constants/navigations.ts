@@ -2,7 +2,7 @@ export const navigation = [
   {
     id: 1,
     name: 'Balance',
-    route: '/',
+    route: '/home',
   },
   {
     id: 2,
