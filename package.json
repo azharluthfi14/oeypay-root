@@ -21,6 +21,7 @@
     "@hookform/resolvers": "^3.3.2",
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.2",
+    "class-variance-authority": "^0.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-geetest-v4": "^1.1.2",

@@ -1,9 +1,10 @@
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+
+import type { LoginSchema } from '@/components';
+import { FormRegister } from '@/components';
 export const RegisterPage = () => {
-  return (
-    <div className="bg-white rounded-lg p-4 max-h-full min-h-screen relative">
-      <div className="sticky bottom-0 bg-rose-200">
-        <button>Register</button>
-      </div>
-    </div>
-  );
+  const { handleSubmit, control } = useForm<LoginSchema>();
+  const onSubmit: SubmitHandler<LoginSchema> = data => console.log(data);
+  return <FormRegister control={control} handleSubmit={handleSubmit(onSubmit)} />;
 };

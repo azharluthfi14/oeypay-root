@@ -13,12 +13,16 @@ export const HomePage = () => {
       This is HomePage Mas
       <Input placeholder="Text input" />
       <GeeTest
+        nativeButton={{
+          width: '100%',
+        }}
+        rootClassName="p-5"
         ref={captchaRef}
         captchaId={'650457b6fc1d5c03e2625e1079d55ec2'}
-        product={'bind'}
-        onSuccess={result => console.log('success. result: ', result)}>
-        <button>Submit</button>
-      </GeeTest>
+        product={'popup'}
+        onSuccess={result => console.log('success. result: ', result)}
+      />
+      <button>Submit</button>
     </section>
   );
 };
