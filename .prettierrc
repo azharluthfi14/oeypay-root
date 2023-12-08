@@ -1,0 +1,10 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": true,
+  "bracketSameLine": true,
+  "arrowParens": "avoid",
+  "quoteProps": "consistent",
+  "proseWrap": "always",
+  "printWidth": 100
+}
