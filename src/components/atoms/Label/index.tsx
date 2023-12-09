@@ -13,5 +13,5 @@ export const Label = React.forwardRef<
   React.ElementRef<'label'>,
   React.ComponentPropsWithoutRef<'label'> & VariantProps<typeof labelVariants>
 >(({ className, ...props }, ref) => (
-  <label ref={ref} {...props} className={cn(labelVariants(), className)} />
+  <label ref={ref} className={cn(labelVariants(), className)} {...props} />
 ));
