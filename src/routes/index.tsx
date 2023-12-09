@@ -1,7 +1,10 @@
 import { Outlet, Route, Routes } from 'react-router-dom';
 
+import { FinishOnboarding } from './finishedOnboarding';
+
 import BottomTab from '@/components/molecules/BottomTabs';
 import { DiscoverPage, ExplorerPage, HomePage, RegisterPage } from '@/pages';
+import { OnBoarding } from '@/pages/Onboarding';
 
 const AuthLayoutPage = () => {
   return (
@@ -29,13 +32,15 @@ const LayoutPage = () => {
 };
 
 export const RootLayout = () => {
+  // const onboard = localStorage.getItem('onboard');
   return (
     <>
       <Routes>
-        <Route element={<AuthLayoutPage />}>
+        <Route path='/onboarding' element={<OnBoarding />} />
+        <Route element={<FinishOnboarding><AuthLayoutPage /></FinishOnboarding>}>
           <Route path="/" element={<RegisterPage />} />
         </Route>
-        <Route element={<LayoutPage />}>
+        <Route element={<FinishOnboarding><LayoutPage /></FinishOnboarding>}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/explorer" element={<ExplorerPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
