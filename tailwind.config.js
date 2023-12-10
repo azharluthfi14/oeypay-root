@@ -11,5 +11,5 @@ export default {
       },
     },
   },
-  plugins: ['prettier-plugin-tailwindcss'],
+  plugins: [require('@tailwindcss/forms'), 'prettier-plugin-tailwindcss'],
 };

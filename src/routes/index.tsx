@@ -1,12 +1,45 @@
-import { Outlet, Route, Routes } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 
 import BottomTab from '@/components/molecules/BottomTabs';
-import { DiscoverPage, ExplorerPage, HomePage, RegisterPage } from '@/pages';
+import {
+  DiscoverPage,
+  ExplorerPage,
+  HomePage,
+  LoginPage,
+  RegisterPage,
+} from '@/pages';
+import { selectNotifications } from '@/store';
+import { history } from '@/utils';
+
+const Alert = () => {
+  const alerts = useSelector(selectNotifications);
+
+  const showToast = (msg: any, type: any) => {
+    if (type === 'error') {
+      toast.error(msg);
+    } else {
+      toast.success(msg);
+    }
+    return null;
+  };
+
+  return (
+    <>
+      {alerts.map((item, i) => (
+        <div key={i}>
+          {showToast(item.message, item.type === 'error' ? 'error' : 'success')}
+        </div>
+      ))}
+    </>
+  );
+};
 
 const AuthLayoutPage = () => {
   return (
-    <main className="my-0 mx-auto min-h-full max-w-screen-sm">
-      <div className="my-0 mx-auto min-h-screen max-w-[480px] overflow-x-hidden overflow-hidden  bg-white2 pb-[66px]">
+    <main className="mx-auto my-0 min-h-full max-w-screen-sm">
+      <div className="mx-auto my-0 min-h-screen max-w-[480px] overflow-hidden overflow-x-hidden  bg-white2 pb-[66px]">
         <div className="p-4">
           <Outlet />
         </div>
@@ -17,8 +50,8 @@ const AuthLayoutPage = () => {
 
 const LayoutPage = () => {
   return (
-    <main className="my-0 mx-auto min-h-full max-w-screen-sm">
-      <div className="my-0 mx-auto min-h-screen max-w-[480px] overflow-x-hidden bg-white2 pb-[66px]">
+    <main className="mx-auto my-0 min-h-full max-w-screen-sm">
+      <div className="mx-auto my-0 min-h-screen max-w-[480px] overflow-x-hidden bg-white2 pb-[66px]">
         <div className="p-4">
           <Outlet />
         </div>
@@ -29,11 +62,15 @@ const LayoutPage = () => {
 };
 
 export const RootLayout = () => {
+  history.navigate = useNavigate();
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
+      <Alert />
       <Routes>
         <Route element={<AuthLayoutPage />}>
-          <Route path="/" element={<RegisterPage />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Route>
         <Route element={<LayoutPage />}>
           <Route path="/home" element={<HomePage />} />
