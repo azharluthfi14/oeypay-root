@@ -21,6 +21,10 @@ type Middleware<S, E extends Action> = (
 
 export const notificationMiddleware: Middleware<Store, Action> = () => next => action => {
   if (action.type === 'notifications/addNotification') {
+<<<<<<< HEAD
+=======
+    // Hapus state notif di store
+>>>>>>> b0a7305a7faaff87f065806b6f28806a80cd5f29
     setTimeout(() => {
       store.dispatch(removeNotification());
     }, 4500);

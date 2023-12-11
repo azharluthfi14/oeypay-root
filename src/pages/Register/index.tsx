@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Card, FormRegisterPure } from '@/components';
+import { Card, FormRegisterPure, HeaderNavigation } from '@/components';
 import type { FieldName, RegisterData } from '@/types';
 import { isPasswordValid } from '@/utils';
 
@@ -12,15 +12,12 @@ export const RegisterPage = () => {
     password: '',
   });
 
-  const handleFieldChange = useCallback(
-    (fieldName: FieldName, value: string) => {
-      setRegisterData(prevRegisterData => ({
-        ...prevRegisterData,
-        [fieldName]: value,
-      }));
-    },
-    [],
-  );
+  const handleFieldChange = useCallback((fieldName: FieldName, value: string) => {
+    setRegisterData(prevRegisterData => ({
+      ...prevRegisterData,
+      [fieldName]: value,
+    }));
+  }, []);
 
   const handleSubmit = () => {
     console.log(registerData);
@@ -29,34 +26,37 @@ export const RegisterPage = () => {
   const passwordRequirements = [
     {
       condition: isPasswordValid(registerData.password),
-      text: 'At least 8 characters',
-    },
-    {
-      condition: /[A-Z]/.test(registerData.password),
-      text: 'At least 1 uppercase letter',
+      text: 'atleast 6 characters long',
     },
     {
       condition: /[a-z]/.test(registerData.password),
-      text: 'At least 1 lowercase letter',
+      text: 'atleast one lowercase character',
+    },
+    {
+      condition: /[A-Z]/.test(registerData.password),
+      text: 'atleast one uppercase character',
     },
     {
       condition:
         /[0-9]/.test(registerData.password) ||
         /[!@#$%^&*(),.?":{}|<>]/.test(registerData.password),
-      text: 'At least 1 number or special character',
+      text: 'atleast one number',
     },
   ];
 
   return (
-    <Card>
-      <FormRegisterPure
-        showPassword={showPassword}
-        registerData={registerData}
-        handleFieldChange={handleFieldChange}
-        toggleShowPassword={() => setShowPassword(!showPassword)}
-        onSubmit={handleSubmit}
-        passwordRequirements={passwordRequirements}
-      />
-    </Card>
+    <>
+      <HeaderNavigation title="Register" />
+      <Card>
+        <FormRegisterPure
+          showPassword={showPassword}
+          registerData={registerData}
+          handleFieldChange={handleFieldChange}
+          toggleShowPassword={() => setShowPassword(!showPassword)}
+          onSubmit={handleSubmit}
+          passwordRequirements={passwordRequirements}
+        />
+      </Card>
+    </>
   );
 };

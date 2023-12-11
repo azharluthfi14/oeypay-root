@@ -2,14 +2,11 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 
+import { OnboardWrapper } from './OnboardWrapper';
+
 import BottomTab from '@/components/molecules/BottomTabs';
-import {
-  DiscoverPage,
-  ExplorerPage,
-  HomePage,
-  LoginPage,
-  RegisterPage,
-} from '@/pages';
+import { DiscoverPage, ExplorerPage, HomePage, LoginPage, RegisterPage } from '@/pages';
+import { OnBoarding } from '@/pages/Onboarding';
 import { selectNotifications } from '@/store';
 import { history } from '@/utils';
 
@@ -63,16 +60,28 @@ const LayoutPage = () => {
 
 export const RootLayout = () => {
   history.navigate = useNavigate();
+  // const onboard = localStorage.getItem('onboard');
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <Alert />
       <Routes>
-        <Route element={<AuthLayoutPage />}>
+        <Route path="/onboarding" element={<OnBoarding />} />
+        <Route
+          element={
+            <OnboardWrapper>
+              <AuthLayoutPage />
+            </OnboardWrapper>
+          }>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
-        <Route element={<LayoutPage />}>
+        <Route
+          element={
+            <OnboardWrapper>
+              <LayoutPage />
+            </OnboardWrapper>
+          }>
           <Route path="/home" element={<HomePage />} />
           <Route path="/explorer" element={<ExplorerPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
