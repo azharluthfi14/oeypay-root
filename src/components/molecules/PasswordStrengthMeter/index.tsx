@@ -56,3 +56,36 @@ export const PasswordStrengthMeter = ({ password }: PasswordStrengthMeterProps) 
     </div>
   );
 };
+
+// import { memo, type FC } from "react";
+// import zxcvbn from "zxcvbn";
+
+// interface PasswordStrengthMeterProps {
+//   inputValue: string;
+// }
+
+// export const PasswordStrengthMeter: FC<PasswordStrengthMeterProps> = memo(
+//   ({ inputValue }) => {
+//     const passwordScore = zxcvbn(inputValue).score;
+
+//     return (
+//       <div className="w-full h-1.5 bg-gray-200 rounded-full">
+//         <div
+//           role="progressbar"
+//           className={`h-1.5 rounded-full transition-all ease-in-out duration-200 overflow-hidden ${
+//             passwordScore === 0
+//               ? "bg-gray-200"
+//               : passwordScore === 1
+//               ? "bg-red-400"
+//               : passwordScore === 2
+//               ? "bg-orange-400"
+//               : passwordScore === 3
+//               ? "bg-yellow-400"
+//               : "bg-green-400"
+//           }`}
+//           style={{ width: `${(passwordScore / 4) * 100}%` }}
+//         />
+//       </div>
+//     );
+//   }
+// );

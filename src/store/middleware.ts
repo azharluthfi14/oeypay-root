@@ -2,7 +2,7 @@ import type { Action, Dispatch, Reducer } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/store';
 import { loginUserAction, removeNotification, store } from '@/store';
-import { history } from '@/utils';
+import { route } from '@/utils';
 
 interface MiddlewareAPI<S, E extends Action> {
   dispatch: Dispatch<E>;
@@ -21,10 +21,6 @@ type Middleware<S, E extends Action> = (
 
 export const notificationMiddleware: Middleware<Store, Action> = () => next => action => {
   if (action.type === 'notifications/addNotification') {
-<<<<<<< HEAD
-=======
-    // Hapus state notif di store
->>>>>>> b0a7305a7faaff87f065806b6f28806a80cd5f29
     setTimeout(() => {
       store.dispatch(removeNotification());
     }, 4500);
@@ -34,8 +30,8 @@ export const notificationMiddleware: Middleware<Store, Action> = () => next => a
 
 export const redirectMiddleware: Middleware<Store, Action> = () => next => action => {
   if (action.type === loginUserAction.fulfilled.type) {
-    if (history.navigate) {
-      history.navigate('/dashboard');
+    if (route.navigate) {
+      route.navigate('/dashboard');
     }
   }
   return next(action);

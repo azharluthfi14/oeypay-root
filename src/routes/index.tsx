@@ -8,7 +8,7 @@ import BottomTab from '@/components/molecules/BottomTabs';
 import { DiscoverPage, ExplorerPage, HomePage, LoginPage, RegisterPage } from '@/pages';
 import { OnBoarding } from '@/pages/Onboarding';
 import { selectNotifications } from '@/store';
-import { history } from '@/utils';
+import { route } from '@/utils';
 
 const Alert = () => {
   const alerts = useSelector(selectNotifications);
@@ -59,7 +59,7 @@ const LayoutPage = () => {
 };
 
 export const RootLayout = () => {
-  history.navigate = useNavigate();
+  route.navigate = useNavigate();
   // const onboard = localStorage.getItem('onboard');
   return (
     <>
