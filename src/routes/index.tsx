@@ -3,13 +3,7 @@ import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 
 import BottomTab from '@/components/molecules/BottomTabs';
-import {
-  DiscoverPage,
-  ExplorerPage,
-  HomePage,
-  LoginPage,
-  RegisterPage,
-} from '@/pages';
+import { DiscoverPage, ExplorerPage, HomePage, LoginPage, RegisterPage } from '@/pages';
 import { selectNotifications } from '@/store';
 import { history } from '@/utils';
 

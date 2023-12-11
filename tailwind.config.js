@@ -8,6 +8,7 @@ export default {
         yellow: '#FFBE00',
         green: '#1DAB87',
         gray2: '#596780',
+        lightGray: '#A3AED0',
       },
     },
   },

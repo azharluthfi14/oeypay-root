@@ -13,6 +13,7 @@ export interface LoginSchema {
 const initialState = {
   isSuccess: false,
   isLoading: false,
+  countState: 5,
 };
 
 export const loginUserAction = createAsyncThunk(
@@ -20,10 +21,8 @@ export const loginUserAction = createAsyncThunk(
   async (value: LoginSchema, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.post(`${BASE_URL}/auth/login`, value);
-      const {
-        accessToken,
-        refreshToken,
-      }: { accessToken: string; refreshToken: string } = response.data;
+      const { accessToken, refreshToken }: { accessToken: string; refreshToken: string } =
+        response.data;
       // Store the tokens in localStorage or secure cookie for later use
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
