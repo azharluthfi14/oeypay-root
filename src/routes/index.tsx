@@ -2,7 +2,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 
-import { FinishOnboarding } from './finishedOnboarding';
+import { OnboardWrapper } from './OnboardWrapper';
 
 import BottomTab from '@/components/molecules/BottomTabs';
 import {
@@ -12,6 +12,7 @@ import {
   LoginPage,
   RegisterPage,
 } from '@/pages';
+import { OnBoarding } from '@/pages/Onboarding';
 import { selectNotifications } from '@/store';
 import { history } from '@/utils';
 
@@ -37,7 +38,6 @@ const Alert = () => {
     </>
   );
 };
-import { OnBoarding } from '@/pages/Onboarding';
 
 const AuthLayoutPage = () => {
   return (
@@ -73,11 +73,11 @@ export const RootLayout = () => {
       <Alert />
       <Routes>
         <Route path='/onboarding' element={<OnBoarding />} />
-        <Route element={<FinishOnboarding><AuthLayoutPage /></FinishOnboarding>}>
+        <Route element={<OnboardWrapper><AuthLayoutPage /></OnboardWrapper>}>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
-        <Route element={<FinishOnboarding><LayoutPage /></FinishOnboarding>}>
+        <Route element={<OnboardWrapper><LayoutPage /></OnboardWrapper>}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/explorer" element={<ExplorerPage />} />
           <Route path="/discover" element={<DiscoverPage />} />

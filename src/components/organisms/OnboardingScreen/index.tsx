@@ -1,17 +1,31 @@
+import { FirstOnboard, SecondOnboard, ThirdOnboard } from "@/assets"
+import { colors } from "@/constants"
 
 export const OnBoarding1 = () => {
     return (
-        <div>OnBoarding1</div>
+        <section className="space-y-4">
+            <FirstOnboard className="mx-auto" />
+            <p className={`text-center text-lg text-[${colors.Yellow}]`}>Explore App Features</p>
+            <p className={`text-center text-[${colors.GraySecondary}]`}>Amet minim mollit non deserunt ullamco est</p>
+        </section>
     )
 }
 
 export const OnBoarding2 = () => {
     return (
-        <div>OnBoarding2</div>
+        <section className="space-y-4">
+            <SecondOnboard className="mx-auto" />
+            <p className={`text-center text-lg text-[${colors.Yellow}]`}>Security Matters</p>
+            <p className={`text-center text-[${colors.GraySecondary}]`}>Amet minim mollit non deserunt ullamco est</p>
+        </section>
     )
 }
 export const OnBoarding3 = () => {
     return (
-        <div>OnBoarding3</div>
+        <section className="space-y-4">
+            <ThirdOnboard className="mx-auto" />
+            <p className={`text-center text-lg text-[${colors.Yellow}]`}>Explore In-App Services</p>
+            <p className={`text-center text-[${colors.GraySecondary}]`}>Amet minim mollit non deserunt ullamco est</p>
+        </section>
     )
 }

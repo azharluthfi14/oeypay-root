@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-export const FinishOnboarding = ({ children }: { children: JSX.Element }) => {
+export const OnboardWrapper = ({ children }: { children: JSX.Element }) => {
     const onboard = localStorage.getItem('onboard');
     const location = useLocation()
     if (!onboard) {
