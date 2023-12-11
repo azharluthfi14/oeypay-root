@@ -2,6 +2,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 
+import { FinishOnboarding } from './finishedOnboarding';
+
 import BottomTab from '@/components/molecules/BottomTabs';
 import {
   DiscoverPage,
@@ -35,6 +37,7 @@ const Alert = () => {
     </>
   );
 };
+import { OnBoarding } from '@/pages/Onboarding';
 
 const AuthLayoutPage = () => {
   return (
@@ -63,16 +66,18 @@ const LayoutPage = () => {
 
 export const RootLayout = () => {
   history.navigate = useNavigate();
+  // const onboard = localStorage.getItem('onboard');
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
       <Alert />
       <Routes>
-        <Route element={<AuthLayoutPage />}>
+        <Route path='/onboarding' element={<OnBoarding />} />
+        <Route element={<FinishOnboarding><AuthLayoutPage /></FinishOnboarding>}>
           <Route path="/" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
-        <Route element={<LayoutPage />}>
+        <Route element={<FinishOnboarding><LayoutPage /></FinishOnboarding>}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/explorer" element={<ExplorerPage />} />
           <Route path="/discover" element={<DiscoverPage />} />
