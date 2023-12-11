@@ -1,10 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 import { notificationReducer } from '@/store/features/public';
-import { loginReducer } from '@/store/features/user';
+import { authReducer, loginReducer, registerReducer } from '@/store/features/user';
 
 const userRootReducer = combineReducers({
-  user: loginReducer,
+  auth: authReducer,
+  login: loginReducer,
+  register: registerReducer,
 });
 
 const publicReducer = combineReducers({

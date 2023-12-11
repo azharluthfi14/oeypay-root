@@ -6,6 +6,6 @@
   "arrowParens": "avoid",
   "quoteProps": "consistent",
   "proseWrap": "always",
-  "printWidth": 80,
+  "printWidth": 90,
   "plugins": ["prettier-plugin-tailwindcss"]
 }

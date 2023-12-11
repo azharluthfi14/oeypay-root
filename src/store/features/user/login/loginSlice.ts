@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { addNotification } from '@/store';
+import type { CommonState, User } from '@/store';
+import { addNotification, registerEmailVerify, signInRequire2FA } from '@/store';
 
 const BASE_URL = 'https://dummyjson.com';
 
@@ -10,7 +11,7 @@ export interface LoginSchema {
   password: string;
 }
 
-const initialState = {
+const initialState: CommonState = {
   isSuccess: false,
   isLoading: false,
 };
@@ -19,16 +20,19 @@ export const loginUserAction = createAsyncThunk(
   'auth/userLogin',
   async (value: LoginSchema, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axios.post(`${BASE_URL}/auth/login`, value);
-      const {
-        accessToken,
-        refreshToken,
-      }: { accessToken: string; refreshToken: string } = response.data;
-      // Store the tokens in localStorage or secure cookie for later use
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      const response: User = await axios.post(`${BASE_URL}/auth/login`, value);
+      if (response.state === 'pending') {
+        dispatch(registerEmailVerify({ requireEmailVerification: true }));
+      } else {
+        dispatch(signInRequire2FA({ required2FA: response.otp }));
+      }
+
+      return response;
     } catch (error: any) {
-      console.log('error', error);
+      const errorMessage = error?.response?.data?.message as string;
+      if (errorMessage.includes('missing otp')) {
+        dispatch(signInRequire2FA({ required2FA: true }));
+      }
       await dispatch(
         addNotification({
           id: Math.random().toString(),
