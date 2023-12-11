@@ -1,5 +1,17 @@
 import type { ReactNode } from 'react';
 
-export const Card = ({ children }: { children: ReactNode }) => {
-  return <div className="bg-white rounded-lg p-4 border">{children}</div>;
+import { cn } from '@/utils';
+
+export const Card = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
+  return (
+    <div className={cn('bg-white rounded-lg p-4 border', className)}>
+      {children}
+    </div>
+  );
 };

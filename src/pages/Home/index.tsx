@@ -11,7 +11,7 @@ export const HomePage = () => {
   return (
     <section data-testid="title-homepage">
       This is HomePage Mas
-      <Input placeholder="Text input" />
+      {/* <Input placeholder="Text input" />
       <GeeTest
         nativeButton={{
           width: '100%',
@@ -22,7 +22,7 @@ export const HomePage = () => {
         product={'popup'}
         onSuccess={result => console.log('success. result: ', result)}
       />
-      <button>Submit</button>
+      <button>Submit</button> */}
     </section>
   );
 };

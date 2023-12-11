@@ -11,12 +11,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          'flex h-12 w-full rounded-md border placeholder:text-[12px] border-white2 bg-white2 px-4 py-4 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
-          className
+          'h-12 w-full rounded-md border border-transparent bg-white2 text-sm transition ease-in-out placeholder:text-gray2 focus:border-transparent focus:outline-0 focus:outline-offset-0 focus:ring-0 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+          className,
         )}
         ref={ref}
         {...props}
       />
     );
-  }
+  },
 );
