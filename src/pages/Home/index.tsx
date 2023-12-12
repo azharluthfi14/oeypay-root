@@ -1,16 +1,32 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import type { GeeTestRef } from 'react-geetest-v4';
 import GeeTest from 'react-geetest-v4';
 
-import { Input } from '@/components';
+import { Input, ListBoxComponent } from '@/components';
 
 export const HomePage = () => {
   const captchaRef = useRef<GeeTestRef | null>(null);
+  const [selectedValue, setSelectedValue] = useState<string>(''); // Inisialisasi nilai default
 
+  const items = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ];
+
+  const handleListBoxChange = (value: string) => {
+    setSelectedValue(value);
+  };
   return (
     <section data-testid="title-homepage">
       This is HomePage Mas
+      <ListBoxComponent
+        items={items}
+        selectedValue={selectedValue}
+        onChange={handleListBoxChange}
+      />
+      <p>Selected Value: {selectedValue}</p>
       {/* <Input placeholder="Text input" />
       <GeeTest
         nativeButton={{

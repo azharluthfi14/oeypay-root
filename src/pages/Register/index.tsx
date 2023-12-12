@@ -23,9 +23,11 @@ export const RegisterPage = () => {
     console.log(registerData);
   };
 
+  console.log('isPasswordValid', isPasswordValid(registerData.password));
+
   const passwordRequirements = [
     {
-      condition: isPasswordValid(registerData.password),
+      condition: registerData.password.length >= 6,
       text: 'atleast 6 characters long',
     },
     {
@@ -37,9 +39,7 @@ export const RegisterPage = () => {
       text: 'atleast one uppercase character',
     },
     {
-      condition:
-        /[0-9]/.test(registerData.password) ||
-        /[!@#$%^&*(),.?":{}|<>]/.test(registerData.password),
+      condition: /[0-9]/.test(registerData.password),
       text: 'atleast one number',
     },
   ];
@@ -51,6 +51,7 @@ export const RegisterPage = () => {
         <FormRegisterPure
           showPassword={showPassword}
           registerData={registerData}
+          disabledSubmit={!isPasswordValid(registerData.password)}
           handleFieldChange={handleFieldChange}
           toggleShowPassword={() => setShowPassword(!showPassword)}
           onSubmit={handleSubmit}

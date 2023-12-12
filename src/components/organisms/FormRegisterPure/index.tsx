@@ -3,7 +3,13 @@ import type { ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 import { IcEyeClose, IcEyeOpen } from '@/assets';
-import { Button, Input, Label, PasswordHelper } from '@/components';
+import {
+  Button,
+  Input,
+  Label,
+  PasswordHelper,
+  PasswordStrengthMeter,
+} from '@/components';
 import type { FieldName } from '@/types';
 
 interface FormRegisterPureProps<T extends FieldName> {
@@ -15,6 +21,7 @@ interface FormRegisterPureProps<T extends FieldName> {
   showPassword: boolean;
   toggleShowPassword: () => void;
   onSubmit: () => void;
+  disabledSubmit?: boolean;
   passwordRequirements: {
     condition: boolean;
     text: string;
@@ -27,6 +34,7 @@ export const FormRegisterPure = ({
   showPassword,
   toggleShowPassword,
   onSubmit,
+  disabledSubmit,
   passwordRequirements,
 }: FormRegisterPureProps<FieldName>) => {
   return (
@@ -74,7 +82,7 @@ export const FormRegisterPure = ({
             </button>
           </div>
         </div>
-        {/* <PasswordStrengthMeter password={registerData.password} /> */}
+        <PasswordStrengthMeter inputValue={registerData.password} />
         <div className="mt-3">
           <PasswordHelper requirements={passwordRequirements} />
         </div>
@@ -94,7 +102,11 @@ export const FormRegisterPure = ({
             </Link>
           </Label>
         </div>
-        <Button className="mb-4 w-full" type="button" onClick={onSubmit}>
+        <Button
+          disabled={disabledSubmit}
+          className="mb-4 w-full"
+          type="button"
+          onClick={onSubmit}>
           Register
         </Button>
         <div className="text-center text-gray2">
