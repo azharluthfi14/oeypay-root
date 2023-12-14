@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { OnboardWrapper } from './OnboardWrapper';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 import BottomTab from '@/components/molecules/BottomTabs';
 import { DiscoverPage, ExplorerPage, HomePage, LoginPage, RegisterPage } from '@/pages';
@@ -61,6 +63,7 @@ const LayoutPage = () => {
 export const RootLayout = () => {
   route.navigate = useNavigate();
   // const onboard = localStorage.getItem('onboard');
+  const isAuthenticated = true;
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
@@ -73,8 +76,11 @@ export const RootLayout = () => {
               <AuthLayoutPage />
             </OnboardWrapper>
           }>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route element={<PublicRoute isAuthenticated={isAuthenticated} />}>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/explorer" element={<ExplorerPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Route>
         </Route>
         <Route
           element={
@@ -82,9 +88,11 @@ export const RootLayout = () => {
               <LayoutPage />
             </OnboardWrapper>
           }>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/explorer" element={<ExplorerPage />} />
-          <Route path="/discover" element={<DiscoverPage />} />
+          <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/discover" element={<DiscoverPage />} />
+            <Route path="/explorer" element={<ExplorerPage />} />
+          </Route>
         </Route>
       </Routes>
     </>

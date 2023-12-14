@@ -12,6 +12,6 @@ export const store = configureStore({
     getDefaultMiddleware({
       immutableCheck: false,
       serializableCheck: false,
-    }).concat(redirectMiddleware, notificationMiddleware),
+    }).concat([redirectMiddleware, notificationMiddleware]),
   devTools: import.meta.env.MODE === 'development',
 });
