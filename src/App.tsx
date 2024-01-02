@@ -1,72 +1,53 @@
 import { ChangeEvent, useState } from "react";
-import { FormCreditCardOne } from "./components/FormCreditCardOne";
+import { number } from "card-validator";
 
 export default function App() {
   const [cardNumber, setCardNumber] = useState("");
   const [expDate, setExpDate] = useState("");
   const [cvc, setCvc] = useState("");
-  const [isCardValid, setIsCardValid] = useState(true);
-  const [cardType, setCardType] = useState<string | null>(null);
+  const [isValid, setIsValid] = useState<boolean>(true);
 
-  const validateCardNumber = (inputText: string) => {
-    const sanitizedInput = inputText.replace(/\D/g, "");
-    let sum = 0;
-    let shouldDouble = false;
+  const handleChangeCardNumber = (event: ChangeEvent<HTMLInputElement>) => {
+    let inputValue = event.target.value.replace(/\D/g, "");
 
-    for (let i = sanitizedInput.length - 1; i >= 0; i--) {
-      let digit = parseInt(sanitizedInput.charAt(i), 10);
+    // Max 16 karakter (XXXX XXXX XXXX XXXX)
+    inputValue = inputValue.slice(0, 16);
 
-      if (shouldDouble) {
-        digit *= 2;
-        if (digit > 9) {
-          digit -= 9;
-        }
-      }
-
-      sum += digit;
-      shouldDouble = !shouldDouble;
+    // format XXXX XXXX XXXX XXXX
+    if (inputValue.length > 4) {
+      inputValue = inputValue.match(/.{1,4}/g)?.join(" ") || "";
     }
+    setCardNumber(inputValue);
 
-    setIsCardValid(sum % 10 === 0);
+    const cardValidation = number(inputValue.replace(/\s+/g, ""));
+    setIsValid(cardValidation.isValid);
   };
 
-  const handleCardNumberChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputNumber = event.target.value.replace(/\D/g, "");
-    let formatedNumber = "";
-
-    for (let i = 0; i < inputNumber.length; i++) {
-      if (i > 0 && i % 4 === 0) {
-        formatedNumber += " ";
-      }
-      formatedNumber += inputNumber[i];
-    }
-    setCardNumber(formatedNumber);
-    validateCardNumber(formatedNumber);
-    detectCardType(formatedNumber);
-  };
-
-  const handleexpDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    let inputDate = event.target.value.replace(/\D/g, "");
+  const handleChangeExpDate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let inputValue = event.target.value;
     let formatedDate = "";
 
-    if (inputDate.length > 4) {
-      inputDate = inputDate.substring(0, 4);
-    }
+    // Menghapus karakter non-digit
+    inputValue = inputValue.replace(/\D/g, "");
 
-    for (let i = 0; i < inputDate.length; i++) {
-      if (i === 2 && inputDate.length > 2) {
+    // Memastikan input tidak lebih dari 6 karakter (MM/YYYY)
+    inputValue = inputValue.slice(0, 6);
+
+    // Menyesuaikan format MM/YYYY
+    for (let i = 0; i < inputValue.length; i++) {
+      if (i === 2 && inputValue.length > 2) {
         formatedDate += "/";
       }
-      if (i === 0 && parseInt(inputDate[i], 10) > 1) {
-        formatedDate += "0" + inputDate[i];
+      if (i === 0 && parseInt(inputValue[i], 10) > 1) {
+        formatedDate += "0" + inputValue[i];
       } else if (
         i === 0 &&
-        inputDate.length === 2 &&
-        parseInt(inputDate, 10) > 12
+        inputValue.length === 2 &&
+        parseInt(inputValue, 10) > 12
       ) {
-        formatedDate = "01/" + inputDate.substring(2);
+        formatedDate = "01/" + inputValue.substring(2);
       } else {
-        formatedDate += inputDate[i];
+        formatedDate += inputValue[i];
       }
     }
 
@@ -82,38 +63,72 @@ export default function App() {
     setCvc(inputNumber);
   };
 
-  const detectCardType = (inputText: string) => {
-    const sanitizedInput = inputText.replace(/\D/g, "");
-
-    if (/^4/.test(sanitizedInput)) {
-      setCardType("Visa");
-    } else if (/^5/.test(sanitizedInput)) {
-      setCardType("MasterCard");
-    } else {
-      setCardType(null);
-    }
-  };
-
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="space-y-6">
-        <h4>{cardNumber.replace(/\s/g, "")}</h4>
-        <h4>{expDate.replace(/\s/g, "")}</h4>
-        {cardType && (
-          <p className="text-gray-600 text-sm mt-2">
-            Card Type: <strong>{cardType}</strong>
-          </p>
-        )}
-
-        <FormCreditCardOne
-          cardNumber={cardNumber}
-          cvc={cvc}
-          expDate={expDate}
-          handleCVCChange={handleCVCChange}
-          handleCardNumberChange={handleCardNumberChange}
-          handleexpDateChange={handleexpDateChange}
-          isCardValid={isCardValid}
-        />
+    <div className="flex h-screen items-center justify-center">
+      <div className="max-w-md mx-auto">
+        <div className="space-y-2.5">
+          <label htmlFor="creditCard">No Card</label>
+          <div className="relative">
+            {/* <div className="absolute inset-y-0 start-0 flex items-center ps-2.5 pointer-events-none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-6 h-6"
+              >
+                <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+                <path
+                  fillRule="evenodd"
+                  d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div> */}
+            <input
+              type="text"
+              id="creditCard"
+              value={cardNumber}
+              onChange={handleChangeCardNumber}
+              className={`bg-gray-300 border-transparent ${
+                isValid
+                  ? "focus:border-gray-300 border-gray-300"
+                  : "focus:border-red-500 border-red-500"
+              }  text-gray-900 text-sm rounded focus:ring-0 block w-full  p-2.5`}
+              placeholder="XXXX XXXX XXXX XXXX"
+              required
+            />
+            <small>
+              {" "}
+              {!isValid && (
+                <p className="text-red-500 text-xs mt-1">
+                  Invalid credit card number
+                </p>
+              )}
+            </small>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 my-4">
+          <div className="space-y-2.5">
+            <label htmlFor="exp">Exp Date</label>
+            <input
+              type="text"
+              value={expDate}
+              onChange={handleChangeExpDate}
+              placeholder="MM/YYYY"
+              className="bg-gray-300 border-transparent focus:border-gray-300 text-gray-900 text-sm rounded focus:ring-0 block w-full  p-2.5  "
+            />
+          </div>
+          <div className="space-y-2.5">
+            <label htmlFor="exp">CVA</label>
+            <input
+              type="text"
+              value={cvc}
+              onChange={handleCVCChange}
+              placeholder="CVA"
+              className="bg-gray-300 border-transparent focus:border-gray-300 text-gray-900 text-sm rounded focus:ring-0 block w-full  p-2.5  "
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
